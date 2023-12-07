@@ -9,6 +9,19 @@ const scaledCanvas = {
   height: canvas.height / 4,
 };
 
+const floorCollisions2D = [];
+for (let i = 0; i < floorCollisions.length; i += 36) {
+  floorCollisions2D.push(floorCollisions.slice(i, i + 36));
+}
+
+floorCollisions2D.forEach((row) => {
+  row.forEach((block) => {
+    if (block == 202) {
+      console.log("Draw a block here.");
+    }
+  });
+});
+
 const gravity = 0.5;
 
 class Sprite {
