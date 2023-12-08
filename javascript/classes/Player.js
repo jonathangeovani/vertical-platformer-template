@@ -1,18 +1,12 @@
-class Player {
-  constructor({ position, collisionBlocks }) {
+class Player extends Sprite {
+  constructor({ position, collisionBlocks, imageSrc, frameRate, scale = 0.5 }) {
+    super({ imageSrc, frameRate, scale });
     this.position = position;
     this.velocity = {
       x: 0,
       y: 1,
     };
-    this.width = 25;
-    this.height = 25;
     this.collisionBlocks = collisionBlocks;
-  }
-
-  draw() {
-    c.fillStyle = "#F00";
-    c.fillRect(this.position.x, this.position.y, this.width, this.height);
   }
 
   applyGravity() {
@@ -69,7 +63,11 @@ class Player {
   }
 
   update() {
+    this.updateFrames();
+    c.fillStyle = "#00FF0032";
+    c.fillRect(this.position.x, this.position.y, this.width, this.height);
     this.draw();
+
     this.position.x += this.velocity.x;
     this.checkForHorizontalCollisions();
     this.applyGravity();
