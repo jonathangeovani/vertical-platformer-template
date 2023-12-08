@@ -1,5 +1,5 @@
 class Player {
-  constructor(position) {
+  constructor({ position }) {
     this.position = position;
     this.velocity = {
       x: 0,

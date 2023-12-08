@@ -56,7 +56,12 @@ const gravity = 0.5;
 c.fillStyle = "#FFF";
 c.fillRect(0, 0, canvas.width, canvas.height);
 
-const player = new Player({ x: 100, y: 0 }, { x: 100, y: 100 });
+const player = new Player({
+  position: {
+    x: 100,
+    y: 0,
+  },
+});
 
 const keys = {
   a: {
