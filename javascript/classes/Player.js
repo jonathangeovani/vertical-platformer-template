@@ -7,11 +7,30 @@ class Player extends Sprite {
       y: 1,
     };
     this.collisionBlocks = collisionBlocks;
+    this.hitbox = {
+      position: {
+        x: this.position.x,
+        y: this.position.y,
+      },
+      width: 10,
+      height: 10,
+    };
   }
 
   applyGravity() {
     this.position.y += this.velocity.y;
     this.velocity.y += gravity;
+  }
+
+  updateHitbox() {
+    this.hitbox = {
+      position: {
+        x: this.position.x + 34,
+        y: this.position.y + 25,
+      },
+      width: 14,
+      height: 28,
+    };
   }
 
   checkForVerticalCollisions() {
@@ -20,19 +39,26 @@ class Player extends Sprite {
 
       if (
         collision({
-          object1: this,
+          object1: this.hitbox,
           object2: collisionBlock,
         })
       ) {
         if (this.velocity.y > 0) {
           this.velocity.y = 0;
-          this.position.y = collisionBlock.position.y - this.height - 0.01;
+
+          const offset =
+            this.hitbox.position.y - this.position.y + this.hitbox.height;
+
+          this.position.y = collisionBlock.position.y - offset - 0.01;
         }
 
         if (this.velocity.y < 0) {
           this.velocity.y = 0;
+
+          const offset = this.hitbox.position.y - this.position.y;
+
           this.position.y =
-            collisionBlock.position.y + collisionBlock.height + 0.01;
+            collisionBlock.position.y + collisionBlock.height - offset + 0.01;
         }
       }
     }
@@ -44,19 +70,26 @@ class Player extends Sprite {
 
       if (
         collision({
-          object1: this,
+          object1: this.hitbox,
           object2: collisionBlock,
         })
       ) {
         if (this.velocity.x > 0) {
           this.velocity.x = 0;
-          this.position.x = collisionBlock.position.x - this.width - 0.01;
+
+          const offset =
+            this.hitbox.position.x - this.position.x + this.hitbox.width;
+
+          this.position.x = collisionBlock.position.x - offset - 0.01;
         }
 
         if (this.velocity.x < 0) {
           this.velocity.x = 0;
+
+          const offset = this.hitbox.position.x - this.position.x;
+
           this.position.x =
-            collisionBlock.position.x + collisionBlock.width + 0.01;
+            collisionBlock.position.x + collisionBlock.width - offset + 0.01;
         }
       }
     }
@@ -64,13 +97,26 @@ class Player extends Sprite {
 
   update() {
     this.updateFrames();
+    this.updateHitbox();
+
     c.fillStyle = "#00FF0032";
     c.fillRect(this.position.x, this.position.y, this.width, this.height);
+
+    c.fillStyle = "#0000FF32";
+    c.fillRect(
+      this.hitbox.position.x,
+      this.hitbox.position.y,
+      this.hitbox.width,
+      this.hitbox.height
+    );
+
     this.draw();
 
     this.position.x += this.velocity.x;
+    this.updateHitbox();
     this.checkForHorizontalCollisions();
     this.applyGravity();
+    this.updateHitbox();
     this.checkForVerticalCollisions();
   }
 }

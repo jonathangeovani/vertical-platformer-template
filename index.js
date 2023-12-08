@@ -59,7 +59,7 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 const player = new Player({
   position: {
     x: 100,
-    y: 200,
+    y: 300,
   },
   collisionBlocks: collisionBlocks.floor,
   imageSrc: "./images/warrior/Idle.png",
