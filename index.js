@@ -59,8 +59,9 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 const player = new Player({
   position: {
     x: 100,
-    y: 0,
+    y: 200,
   },
+  collisionBlocks: collisionBlocks.floor,
 });
 
 const keys = {
@@ -92,13 +93,12 @@ function animate() {
   collisionBlocks.platform.forEach((block) => {
     block.update();
   });
-  c.restore();
-
   player.update();
 
   player.velocity.x = 0;
-  if (keys.d.pressed) player.velocity.x = 5;
-  else if (keys.a.pressed) player.velocity.x = -5;
+  if (keys.d.pressed) player.velocity.x = 3;
+  else if (keys.a.pressed) player.velocity.x = -3;
+  c.restore();
 }
 
 animate();
@@ -112,7 +112,7 @@ window.addEventListener("keydown", (event) => {
       keys.a.pressed = true;
       break;
     case "w":
-      player.velocity.y = -15;
+      player.velocity.y = -7;
       break;
   }
 });
