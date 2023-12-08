@@ -13,11 +13,40 @@ const floorCollisions2D = [];
 for (let i = 0; i < floorCollisions.length; i += 36) {
   floorCollisions2D.push(floorCollisions.slice(i, i + 36));
 }
+const platformCollisions2D = [];
+for (let i = 0; i < platformCollisions.length; i += 36) {
+  platformCollisions2D.push(platformCollisions.slice(i, i + 36));
+}
 
-floorCollisions2D.forEach((row) => {
-  row.forEach((block) => {
-    if (block == 202) {
-      console.log("Draw a block here.");
+const collisionBlocks = {
+  floor: [],
+  platform: [],
+};
+floorCollisions2D.forEach((row, rowIndex) => {
+  row.forEach((col, colIndex) => {
+    if (col == 202) {
+      collisionBlocks.floor.push(
+        new CollisionBlock({
+          position: {
+            x: colIndex * 16,
+            y: rowIndex * 16,
+          },
+        })
+      );
+    }
+  });
+});
+platformCollisions2D.forEach((row, rowIndex) => {
+  row.forEach((col, colIndex) => {
+    if (col == 202) {
+      collisionBlocks.platform.push(
+        new CollisionBlock({
+          position: {
+            x: colIndex * 16,
+            y: rowIndex * 16,
+          },
+        })
+      );
     }
   });
 });
@@ -52,6 +81,12 @@ function animate() {
   c.scale(4, 4);
   c.translate(0, -background.image.height + scaledCanvas.height);
   background.update();
+  collisionBlocks.floor.forEach((block) => {
+    block.update();
+  });
+  collisionBlocks.platform.forEach((block) => {
+    block.update();
+  });
   c.restore();
 
   player.update();
