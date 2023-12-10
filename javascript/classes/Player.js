@@ -1,12 +1,22 @@
 class Player extends Sprite {
-  constructor({ position, collisionBlocks, imageSrc, frameRate, scale = 0.5 }) {
+  constructor({
+    position,
+    collisionBlocks,
+    imageSrc,
+    frameRate,
+    scale = 0.5,
+    animations,
+  }) {
     super({ imageSrc, frameRate, scale });
     this.position = position;
+
     this.velocity = {
       x: 0,
       y: 1,
     };
+
     this.collisionBlocks = collisionBlocks;
+
     this.hitbox = {
       position: {
         x: this.position.x,
@@ -15,11 +25,21 @@ class Player extends Sprite {
       width: 10,
       height: 10,
     };
+
+    this.animations = animations;
+    this.lastDirection = "right";
+
+    for (let key in this.animations) {
+      const image = new Image();
+      image.src = this.animations[key].imageSrc;
+
+      this.animations[key].image = image;
+    }
   }
 
   applyGravity() {
-    this.position.y += this.velocity.y;
     this.velocity.y += gravity;
+    this.position.y += this.velocity.y;
   }
 
   updateHitbox() {
@@ -95,20 +115,28 @@ class Player extends Sprite {
     }
   }
 
+  switchSprite(key) {
+    if (this.image === this.animations[key].image || !this.loaded) return;
+
+    this.image = this.animations[key].image;
+    this.frameBuffer = this.animations[key].frameBuffer;
+    this.frameRate = this.animations[key].frameRate;
+  }
+
   update() {
     this.updateFrames();
     this.updateHitbox();
 
-    c.fillStyle = "#00FF0032";
-    c.fillRect(this.position.x, this.position.y, this.width, this.height);
+    // c.fillStyle = "#00FF0032";
+    // c.fillRect(this.position.x, this.position.y, this.width, this.height);
 
-    c.fillStyle = "#0000FF32";
-    c.fillRect(
-      this.hitbox.position.x,
-      this.hitbox.position.y,
-      this.hitbox.width,
-      this.hitbox.height
-    );
+    // c.fillStyle = "#0000FF32";
+    // c.fillRect(
+    //   this.hitbox.position.x,
+    //   this.hitbox.position.y,
+    //   this.hitbox.width,
+    //   this.hitbox.height
+    // );
 
     this.draw();
 

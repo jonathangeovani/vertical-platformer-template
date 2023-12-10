@@ -64,6 +64,48 @@ const player = new Player({
   collisionBlocks: collisionBlocks.floor,
   imageSrc: "./images/warrior/Idle.png",
   frameRate: 8,
+  animations: {
+    Idle: {
+      imageSrc: "./images/warrior/Idle.png",
+      frameRate: 8,
+      frameBuffer: 4,
+    },
+    IdleLeft: {
+      imageSrc: "./images/warrior/IdleLeft.png",
+      frameRate: 8,
+      frameBuffer: 4,
+    },
+    Run: {
+      imageSrc: "./images/warrior/Run.png",
+      frameRate: 8,
+      frameBuffer: 5,
+    },
+    RunLeft: {
+      imageSrc: "./images/warrior/RunLeft.png",
+      frameRate: 8,
+      frameBuffer: 5,
+    },
+    Jump: {
+      imageSrc: "./images/warrior/Jump.png",
+      frameRate: 2,
+      frameBuffer: 3,
+    },
+    JumpLeft: {
+      imageSrc: "./images/warrior/JumpLeft.png",
+      frameRate: 2,
+      frameBuffer: 3,
+    },
+    Fall: {
+      imageSrc: "./images/warrior/Fall.png",
+      frameRate: 2,
+      frameBuffer: 3,
+    },
+    FallLeft: {
+      imageSrc: "./images/warrior/FallLeft.png",
+      frameRate: 2,
+      frameBuffer: 3,
+    },
+  },
 });
 
 const keys = {
@@ -98,8 +140,28 @@ function animate() {
   player.update();
 
   player.velocity.x = 0;
-  if (keys.d.pressed) player.velocity.x = 3;
-  else if (keys.a.pressed) player.velocity.x = -3;
+
+  if (keys.d.pressed) {
+    player.switchSprite("Run");
+    player.velocity.x = 2;
+    player.lastDirection = "right";
+  } else if (keys.a.pressed) {
+    player.switchSprite("RunLeft");
+    player.lastDirection = "left";
+    player.velocity.x = -2;
+  } else if (player.velocity.y === 0) {
+    if (player.lastDirection === "right") player.switchSprite("Idle");
+    else player.switchSprite("IdleLeft");
+  }
+
+  if (player.velocity.y < 0) {
+    if (player.lastDirection === "right") player.switchSprite("Jump");
+    else player.switchSprite("JumpLeft");
+  } else if (player.velocity.y > 0) {
+    if (player.lastDirection === "right") player.switchSprite("Fall");
+    else player.switchSprite("FallLeft");
+  }
+
   c.restore();
 }
 
@@ -114,7 +176,7 @@ window.addEventListener("keydown", (event) => {
       keys.a.pressed = true;
       break;
     case "w":
-      player.velocity.y = -7;
+      player.velocity.y = -7.5;
       break;
   }
 });
