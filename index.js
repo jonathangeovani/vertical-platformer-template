@@ -208,7 +208,7 @@ window.addEventListener("keydown", (event) => {
       keys.a.pressed = true;
       break;
     case "w":
-      player.velocity.y = -4.7;
+      if (player.velocity.y === 0) player.velocity.y = -4.7;
       break;
   }
 });
