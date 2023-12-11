@@ -75,11 +75,11 @@ class Player extends Sprite {
     };
   }
 
-  shouldPanCameraToTheLeft({ canvas, camera }) {
+  shouldPanCameraToTheLeft({ backgroundImageWidth, canvas, camera }) {
     const cameraboxRightSide = this.camerabox.position.x + this.camerabox.width;
     const scaledDownCanvasWidth = canvas.width / 4;
 
-    if (cameraboxRightSide >= 576) return;
+    if (cameraboxRightSide >= backgroundImageWidth) return;
 
     if (
       cameraboxRightSide >=
@@ -105,10 +105,10 @@ class Player extends Sprite {
     }
   }
 
-  shouldPanCameraUp({ canvas, camera }) {
+  shouldPanCameraUp({ backgroundImageHeight, canvas, camera }) {
     if (
       this.camerabox.position.y + this.camerabox.height + this.velocity.y >=
-      432
+      backgroundImageHeight
     )
       return;
 
@@ -122,9 +122,10 @@ class Player extends Sprite {
     }
   }
 
-  checkForHorizontalCanvasCollision() {
+  checkForHorizontalCanvasCollision({ backgroundImageWidth }) {
     if (
-      this.hitbox.position.x + this.hitbox.width + this.velocity.x >= 576 ||
+      this.hitbox.position.x + this.hitbox.width + this.velocity.x >=
+        backgroundImageWidth ||
       this.hitbox.position.x + this.velocity.x <= 0
     ) {
       this.velocity.x = 0;
@@ -225,8 +226,6 @@ class Player extends Sprite {
   }
 
   update() {
-    this.checkForHorizontalCanvasCollision();
-
     this.updateFrames();
     this.updateHitbox();
     this.updateCamerabox();
