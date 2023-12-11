@@ -139,7 +139,7 @@ const camera = {
 
 function animate() {
   window.requestAnimationFrame(animate);
-  c.fillStyle = "#FFF";
+  c.fillStyle = "#1F1F1F";
   c.fillRect(0, 0, canvas.width, canvas.height);
 
   c.save();
