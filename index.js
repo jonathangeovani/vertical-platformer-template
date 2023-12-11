@@ -52,7 +52,7 @@ platformCollisions2D.forEach((row, rowIndex) => {
   });
 });
 
-const gravity = 0.1;
+const gravity = 0.2;
 
 c.fillStyle = "#FFF";
 c.fillRect(0, 0, canvas.width, canvas.height);
@@ -194,7 +194,7 @@ window.addEventListener("keydown", (event) => {
       keys.a.pressed = true;
       break;
     case "w":
-      player.velocity.y = -3.5;
+      player.velocity.y = -4.7;
       break;
   }
 });

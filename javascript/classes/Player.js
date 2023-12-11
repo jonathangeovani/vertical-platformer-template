@@ -49,8 +49,8 @@ class Player extends Sprite {
   }
 
   applyGravity() {
-    // if (this.velocity.y <= 4) this.velocity.y += gravity;   // Alternative to slow down the fall speed
-    this.velocity.y += gravity;
+    // this.velocity.y += gravity;
+    if (this.velocity.y <= 4) this.velocity.y += gravity;
     this.position.y += this.velocity.y;
   }
 
