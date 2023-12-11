@@ -164,14 +164,14 @@ function animate() {
     player.switchSprite("RunLeft");
     player.lastDirection = "left";
     player.velocity.x = -2;
-    player.shouldPanCameraToTheRight({ canvas, camera });
+    player.shouldPanCameraToTheRight({ camera });
   } else if (player.velocity.y === 0) {
     if (player.lastDirection === "right") player.switchSprite("Idle");
     else player.switchSprite("IdleLeft");
   }
 
   if (player.velocity.y < 0) {
-    player.shouldPanCameraDown({ canvas, camera });
+    player.shouldPanCameraDown({ camera });
     if (player.lastDirection === "right") player.switchSprite("Jump");
     else player.switchSprite("JumpLeft");
   } else if (player.velocity.y > 0) {

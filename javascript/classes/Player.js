@@ -89,7 +89,7 @@ class Player extends Sprite {
     }
   }
 
-  shouldPanCameraToTheRight({ canvas, camera }) {
+  shouldPanCameraToTheRight({ camera }) {
     if (this.camerabox.position.x <= 0) return;
 
     if (this.camerabox.position.x <= Math.abs(camera.position.x)) {
@@ -97,7 +97,7 @@ class Player extends Sprite {
     }
   }
 
-  shouldPanCameraDown({ canvas, camera }) {
+  shouldPanCameraDown({ camera }) {
     if (this.camerabox.position.y + this.velocity.y <= 0) return;
 
     if (this.camerabox.position.y <= Math.abs(camera.position.y)) {
