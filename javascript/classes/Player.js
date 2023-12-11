@@ -97,6 +97,31 @@ class Player extends Sprite {
     }
   }
 
+  shouldPanCameraDown({ canvas, camera }) {
+    if (this.camerabox.position.y + this.velocity.y <= 0) return;
+
+    if (this.camerabox.position.y <= Math.abs(camera.position.y)) {
+      camera.position.y -= this.velocity.y;
+    }
+  }
+
+  shouldPanCameraUp({ canvas, camera }) {
+    if (
+      this.camerabox.position.y + this.camerabox.height + this.velocity.y >=
+      432
+    )
+      return;
+
+    const scaledDownCanvasHeight = canvas.height / 4;
+
+    if (
+      this.camerabox.position.y + this.camerabox.height >=
+      Math.abs(camera.position.y) + scaledDownCanvasHeight
+    ) {
+      camera.position.y -= this.velocity.y;
+    }
+  }
+
   checkForHorizontalCanvasCollision() {
     if (
       this.hitbox.position.x + this.hitbox.width + this.velocity.x >= 576 ||
