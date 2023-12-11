@@ -4,6 +4,11 @@ const c = canvas.getContext("2d");
 canvas.width = 1024;
 canvas.height = 576;
 
+function drawCanvas() {
+  c.fillStyle = "#1F1F1F";
+  c.fillRect(0, 0, canvas.width, canvas.height);
+}
+
 const scaledCanvas = {
   width: canvas.width / 4,
   height: canvas.height / 4,
@@ -52,10 +57,20 @@ platformCollisions2D.forEach((row, rowIndex) => {
   });
 });
 
+function showDebugCollisionBlocks() {
+  collisionBlocks.floor.forEach((block) => {
+    block.update();
+  });
+}
+function showDebugPlatformCollisionBlocks() {
+  collisionBlocks.platform.forEach((block) => {
+    block.update();
+  });
+}
+
 const gravity = 0.2;
 
-c.fillStyle = "#FFF";
-c.fillRect(0, 0, canvas.width, canvas.height);
+drawCanvas();
 
 const player = new Player({
   position: {
@@ -139,19 +154,15 @@ const camera = {
 
 function animate() {
   window.requestAnimationFrame(animate);
-  c.fillStyle = "#1F1F1F";
-  c.fillRect(0, 0, canvas.width, canvas.height);
+  drawCanvas();
 
   c.save();
   c.scale(4, 4);
   c.translate(camera.position.x, camera.position.y);
   background.update();
-  collisionBlocks.floor.forEach((block) => {
-    block.update();
-  });
-  collisionBlocks.platform.forEach((block) => {
-    block.update();
-  });
+
+  showDebugCollisionBlocks();
+  showDebugPlatformCollisionBlocks();
 
   player.checkForHorizontalCanvasCollision({ backgroundImageWidth });
   player.update();

@@ -225,11 +225,7 @@ class Player extends Sprite {
     this.frameRate = this.animations[key].frameRate;
   }
 
-  update() {
-    this.updateFrames();
-    this.updateHitbox();
-    this.updateCamerabox();
-
+  showDebugCamerabox() {
     c.fillStyle = "#0000FF32";
     c.fillRect(
       this.camerabox.position.x,
@@ -237,17 +233,31 @@ class Player extends Sprite {
       this.camerabox.width,
       this.camerabox.height
     );
+  }
 
-    // c.fillStyle = "#00FF0032";
-    // c.fillRect(this.position.x, this.position.y, this.width, this.height);
+  showDebugPlayerBox() {
+    c.fillStyle = "#00FF0032";
+    c.fillRect(this.position.x, this.position.y, this.width, this.height);
+  }
 
-    // c.fillStyle = "#0000FF32";
-    // c.fillRect(
-    //   this.hitbox.position.x,
-    //   this.hitbox.position.y,
-    //   this.hitbox.width,
-    //   this.hitbox.height
-    // );
+  showDebugHitbox() {
+    c.fillStyle = "#0000FF32";
+    c.fillRect(
+      this.hitbox.position.x,
+      this.hitbox.position.y,
+      this.hitbox.width,
+      this.hitbox.height
+    );
+  }
+
+  update() {
+    this.updateFrames();
+    this.updateHitbox();
+    this.updateCamerabox();
+
+    this.showDebugCamerabox();
+    // this.showDebugPlayerBox();
+    // this.showDebugHitbox();
 
     this.draw();
 
