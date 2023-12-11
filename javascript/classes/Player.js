@@ -2,6 +2,7 @@ class Player extends Sprite {
   constructor({
     position,
     collisionBlocks,
+    platformCollisionBlocks,
     imageSrc,
     frameRate,
     scale = 0.5,
@@ -16,6 +17,7 @@ class Player extends Sprite {
     };
 
     this.collisionBlocks = collisionBlocks;
+    this.platformCollisionBlocks = platformCollisionBlocks;
 
     this.hitbox = {
       position: {
@@ -38,6 +40,7 @@ class Player extends Sprite {
   }
 
   applyGravity() {
+    // if (this.velocity.y <= 4) this.velocity.y += gravity;   // Alternative to slow down the fall speed
     this.velocity.y += gravity;
     this.position.y += this.velocity.y;
   }
@@ -79,6 +82,28 @@ class Player extends Sprite {
 
           this.position.y =
             collisionBlock.position.y + collisionBlock.height - offset + 0.01;
+        }
+      }
+    }
+
+    // Platform Collision Blocks
+    for (let i = 0; i < this.platformCollisionBlocks.length; i++) {
+      const platformCollisionBlock = this.platformCollisionBlocks[i];
+
+      if (
+        collision({
+          object1: this.hitbox,
+          object2: platformCollisionBlock,
+          isPlatform: true,
+        })
+      ) {
+        if (this.velocity.y > 0) {
+          this.velocity.y = 0;
+
+          const offset =
+            this.hitbox.position.y - this.position.y + this.hitbox.height;
+
+          this.position.y = platformCollisionBlock.position.y - offset - 0.01;
         }
       }
     }
