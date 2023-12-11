@@ -28,6 +28,15 @@ class Player extends Sprite {
       height: 10,
     };
 
+    this.camerabox = {
+      position: {
+        x: this.position.x,
+        y: this.position.y,
+      },
+      width: 200,
+      height: 80,
+    };
+
     this.animations = animations;
     this.lastDirection = "right";
 
@@ -54,6 +63,47 @@ class Player extends Sprite {
       width: 14,
       height: 28,
     };
+  }
+
+  updateCamerabox() {
+    this.camerabox = {
+      ...this.camerabox,
+      position: {
+        x: this.position.x - 100 + this.width / 2,
+        y: this.position.y,
+      },
+    };
+  }
+
+  shouldPanCameraToTheLeft({ canvas, camera }) {
+    const cameraboxRightSide = this.camerabox.position.x + this.camerabox.width;
+    const scaledDownCanvasWidth = canvas.width / 4;
+
+    if (cameraboxRightSide >= 576) return;
+
+    if (
+      cameraboxRightSide >=
+      scaledDownCanvasWidth + Math.abs(camera.position.x)
+    ) {
+      camera.position.x -= this.velocity.x;
+    }
+  }
+
+  shouldPanCameraToTheRight({ canvas, camera }) {
+    if (this.camerabox.position.x <= 0) return;
+
+    if (this.camerabox.position.x <= Math.abs(camera.position.x)) {
+      camera.position.x -= this.velocity.x;
+    }
+  }
+
+  checkForHorizontalCanvasCollision() {
+    if (
+      this.hitbox.position.x + this.hitbox.width + this.velocity.x >= 576 ||
+      this.hitbox.position.x + this.velocity.x <= 0
+    ) {
+      this.velocity.x = 0;
+    }
   }
 
   checkForVerticalCollisions() {
@@ -150,8 +200,19 @@ class Player extends Sprite {
   }
 
   update() {
+    this.checkForHorizontalCanvasCollision();
+
     this.updateFrames();
     this.updateHitbox();
+    this.updateCamerabox();
+
+    c.fillStyle = "#0000FF32";
+    c.fillRect(
+      this.camerabox.position.x,
+      this.camerabox.position.y,
+      this.camerabox.width,
+      this.camerabox.height
+    );
 
     // c.fillStyle = "#00FF0032";
     // c.fillRect(this.position.x, this.position.y, this.width, this.height);
