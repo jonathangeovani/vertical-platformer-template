@@ -161,8 +161,8 @@ function animate() {
   c.translate(camera.position.x, camera.position.y);
   background.update();
 
-  showDebugCollisionBlocks();
-  showDebugPlatformCollisionBlocks();
+  // showDebugCollisionBlocks();
+  // showDebugPlatformCollisionBlocks();
 
   player.checkForHorizontalCanvasCollision({ backgroundImageWidth });
   player.update();

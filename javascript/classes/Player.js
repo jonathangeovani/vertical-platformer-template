@@ -255,7 +255,7 @@ class Player extends Sprite {
     this.updateHitbox();
     this.updateCamerabox();
 
-    this.showDebugCamerabox();
+    // this.showDebugCamerabox();
     // this.showDebugPlayerBox();
     // this.showDebugHitbox();
 
