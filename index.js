@@ -105,22 +105,22 @@ const player = new Player({
     Jump: {
       imageSrc: "./images/warrior/Jump.png",
       frameRate: 2,
-      frameBuffer: 3,
+      frameBuffer: 4,
     },
     JumpLeft: {
       imageSrc: "./images/warrior/JumpLeft.png",
       frameRate: 2,
-      frameBuffer: 3,
+      frameBuffer: 4,
     },
     Fall: {
       imageSrc: "./images/warrior/Fall.png",
       frameRate: 2,
-      frameBuffer: 3,
+      frameBuffer: 4,
     },
     FallLeft: {
       imageSrc: "./images/warrior/FallLeft.png",
       frameRate: 2,
-      frameBuffer: 3,
+      frameBuffer: 4,
     },
   },
 });
