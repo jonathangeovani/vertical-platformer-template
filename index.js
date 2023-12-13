@@ -200,25 +200,25 @@ function animate() {
 animate();
 
 window.addEventListener("keydown", (event) => {
-  switch (event.key.toLowerCase()) {
-    case "d":
+  switch (event.code) {
+    case "KeyD":
       keys.d.pressed = true;
       break;
-    case "a":
+    case "KeyA":
       keys.a.pressed = true;
       break;
-    case "w":
+    case "KeyW":
       if (player.velocity.y === 0) player.velocity.y = -4.7;
       break;
   }
 });
 
 window.addEventListener("keyup", (event) => {
-  switch (event.key.toLowerCase()) {
-    case "d":
+  switch (event.code) {
+    case "KeyD":
       keys.d.pressed = false;
       break;
-    case "a":
+    case "KeyA":
       keys.a.pressed = false;
       break;
   }
