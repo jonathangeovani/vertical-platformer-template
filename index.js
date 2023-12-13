@@ -200,7 +200,7 @@ function animate() {
 animate();
 
 window.addEventListener("keydown", (event) => {
-  switch (event.key) {
+  switch (event.key.toLowerCase()) {
     case "d":
       keys.d.pressed = true;
       break;
@@ -214,7 +214,7 @@ window.addEventListener("keydown", (event) => {
 });
 
 window.addEventListener("keyup", (event) => {
-  switch (event.key) {
+  switch (event.key.toLowerCase()) {
     case "d":
       keys.d.pressed = false;
       break;
